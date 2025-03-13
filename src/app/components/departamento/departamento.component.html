@@ -1,0 +1,53 @@
+<p-card>
+  <h1>{{visible}}</h1>
+  <div class="flex justify-content-between align-items-center">
+    <h2>Registros</h2>
+    <div class="flex gap-2">
+      <toggle-menu></toggle-menu>
+      <p-button label="Agregar" icon="pi pi-plus" severity="contrast" (click)="visible = true"/>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <p-table
+      [value]="departamentos"
+      [paginator]="true"
+      [rows]="5"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[5, 10, 20]"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width:25%">Código</th>
+          <th style="width:25%">Nombre</th>
+          <th style="width:25%">No. Municipios</th>
+          <th style="width:25%">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-dep>
+        <tr>
+          <td>{{ dep.codigo }}</td>
+          <td>{{ dep.nombre }}</td>
+          <td>{{ dep.municipios ? dep.municipios.size() : 0 }}</td>
+          <td>
+            <div class="flex gap-1">
+              <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" pTooltip="Editar"
+                        tooltipPosition="bottom" severity="contrast"/>
+              <p-button icon="pi pi-trash" [rounded]="true" [text]="true" pTooltip="Eliminar"
+                        tooltipPosition="bottom" severity="contrast"/>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-card>
+
+<departamento-formulario [departamento]="departamento" [visible]="visible"
+                         (onHide)="visible=$event" (onSave)="actualizarLista($event)"></departamento-formulario>
+
+
+<p-toast/>
+
+
