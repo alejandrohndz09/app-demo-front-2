@@ -1,12 +1,37 @@
-<div class="card flex justify-content-center">
-  <p-button label="Check" />
+<div class="flex flex-column h-screen bg-gray-50">
+  <!-- Barra Superior -->
+  <header class="h-4rem bg-gray-900 flex align-items-center px-4 text-white shadow-2">
+    <h2>Mi Aplicación</h2>
+  </header>
+
+  <div class="flex flex-1 gap-4">
+    <!-- Barra Lateral -->
+    <aside class="w-15rem p-3 hidden md:block">
+      <app-menu></app-menu>
+
+      <!--  <nav>
+          <ul class="list-none p-0">
+            <li class="mb-2">
+              <a href="/empleados" class="text-white">
+                <span class="pi pi-home"></span>
+                <span class="ml-2">Inicio</span>
+              </a>
+
+            </li>
+            <li class="mb-2"><a href="#" class="text-white">Perfil</a></li>
+            <li class="mb-2"><a href="#" class="text-white">Configuración</a></li>
+          </ul>
+        </nav>-->
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 p-3 overflow-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>
-<p-card header="Simple Card">
-  <p class="m-0">
-    Lorem ipsum dolor sit amet...
-  </p>
 
 
-</p-card>
+
 
 
