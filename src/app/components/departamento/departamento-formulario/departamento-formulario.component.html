@@ -1,28 +1,40 @@
-<p-dialog header="Nuevo registro" [modal]="true" [(visible)]="visible"  [style]="{ width: '25rem' }"
-          (onHide)="onHide.emit(false)">
+<p-dialog header="{{departamento.id?'Modificar':'Nuevo'}} registro" [modal]="true" [(visible)]="visible"
+          [style]="{ width:'25rem' }"
+          (onHide)="cerrar()">
   <form>
     <span class="p-text-secondary block mb-4">Por favor, complete los campos:</span>
     <div class="mt-2 mb-4">
       <p-floatlabel variant="on">
-        <p-input-mask mask="a*" id="codigo" [(ngModel)]="departamento.codigo"
-                      styleClass="w-full <!--ng-invalid ng-dirty-->"
-                      (input)="convertToUpperCase()"
+        <p-input-mask mask="a*" id="codigo" name="codigo" [(ngModel)]="departamento.codigo"
+                      styleClass="w-full{{hasError('codigo')?' ng-invalid ng-dirty':''}}"
+                      (onComplete)="convertToUpperCase()"
                       autocomplete="off"/>
         <label for="codigo">Código</label>
       </p-floatlabel>
-      <small id="codigo-help">El código debe tener 2 carateres.</small>
+      <!-- Mensaje de error -->
+      <span *ngIf="hasError('codigo')" class="text-red-500 text-sm">
+            {{ getError('codigo') }}
+      </span>
+      <small id="codigo-help" *ngIf="!hasError('codigo')">El código debe tener 2 carateres.</small>
     </div>
 
     <div class="mb-6">
       <p-floatlabel variant="on">
-        <input pInputText id="nombre" [(ngModel)]="departamento.nombre" class="w-full invalid" autocomplete="off"/>
-        <label for="nombre">Nombre:</label>
+        <input pInputText id="nombre" name="nombre" [(ngModel)]="departamento.nombre"
+               class="w-full"
+               autocomplete="off"
+               [ngClass]="{'ng-invalid ng-dirty': hasError('nombre')}"/>
+        <label for="nombre">Nombre</label>
       </p-floatlabel>
-      <small id="nombre-help">Minimo 5 caracteres, máximo 80.</small>
+
+      <span *ngIf="hasError('nombre')" class="text-red-500 text-sm">
+            {{ getError('nombre') }}
+      </span>
+      <small id="nombre-help" *ngIf="!hasError('nombre')">Minimo 5 caracteres, máximo 80.</small>
     </div>
     <div class="flex justify-content-end gap-2">
-      <p-button label="Cancel" severity="secondary" (click)="visible = false"/>
-      <p-button type="submit" label="Save" (click)="guardar(departamento)"/>
+      <p-button label="Cancel" severity="secondary" (click)="cerrar()"></p-button>
+      <p-button type="submit" label="{{departamento.id?'Modificar ':'Guardar'}}" (click)="guardar(departamento)"/>
     </div>
   </form>
 </p-dialog>

@@ -1,5 +1,4 @@
 <p-card>
-  <h1>{{visible}}</h1>
   <div class="flex justify-content-between align-items-center">
     <h2>Registros</h2>
     <div class="flex gap-2">
@@ -13,9 +12,10 @@
     <p-table
       [value]="departamentos"
       [paginator]="true"
-      [rows]="5"
+      [rows]="10"
       [tableStyle]="{ 'min-width': '50rem' }"
       [rowsPerPageOptions]="[5, 10, 20]"
+      [totalRecords]="departamentos.length"
     >
       <ng-template #header>
         <tr>
@@ -25,16 +25,17 @@
           <th style="width:25%">Acciones</th>
         </tr>
       </ng-template>
-      <ng-template #body let-dep>
+      <ng-template #body let-dep >
         <tr>
           <td>{{ dep.codigo }}</td>
           <td>{{ dep.nombre }}</td>
           <td>{{ dep.municipios ? dep.municipios.size() : 0 }}</td>
           <td>
             <div class="flex gap-1">
-              <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" pTooltip="Editar"
+              <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="editar(dep)" pTooltip="Editar"
                         tooltipPosition="bottom" severity="contrast"/>
-              <p-button icon="pi pi-trash" [rounded]="true" [text]="true" pTooltip="Eliminar"
+              <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (onClick)="eliminar($event, dep.id)"
+                        pTooltip="Eliminar"
                         tooltipPosition="bottom" severity="contrast"/>
             </div>
           </td>
@@ -45,9 +46,10 @@
 </p-card>
 
 <departamento-formulario [departamento]="departamento" [visible]="visible"
-                         (onHide)="visible=$event" (onSave)="actualizarLista($event)"></departamento-formulario>
+                         (onHide)="visible=$event; departamento={}"
+                         (onSave)="actualizarLista($event)"></departamento-formulario>
 
-
+<p-confirmDialog/>
 <p-toast/>
 
 
