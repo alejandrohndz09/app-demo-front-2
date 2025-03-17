@@ -3,10 +3,10 @@ import {Button} from "primeng/button";
 import {Card} from "primeng/card";
 import {TableModule} from 'primeng/table';
 import {MiMenuComponent} from '../generics/menu/toggle-menu.component';
-import {Departamento} from '../../models/departamento.model';
+import {Distrito} from '../../models/distrito.model';
 import {Toast} from 'primeng/toast';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {DepartamentoDataService} from '../../services/departamento-data.service';
+import {DistritoDataService} from '../../services/distrito-data.service';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Tooltip} from 'primeng/tooltip';
 import {Dialog} from 'primeng/dialog';
@@ -14,11 +14,12 @@ import {InputText} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputMask} from 'primeng/inputmask';
-import {DepartamentoFormularioComponent} from './departamento-formulario/departamento-formulario.component';
+import {DistritoFormularioComponent} from './distrito-formulario/distrito-formulario.component';
 import {ConfirmDialog} from 'primeng/confirmdialog';
+import {MunicipioDataService} from '../../services/municipio-data.service';
 
 @Component({
-  selector: 'app-departamento',
+  selector: 'app-distrito',
   imports: [
     Button,
     Card,
@@ -28,44 +29,44 @@ import {ConfirmDialog} from 'primeng/confirmdialog';
     HttpClientModule,
     Tooltip,
     FormsModule,
-    DepartamentoFormularioComponent,
+    DistritoFormularioComponent,
     ConfirmDialog
   ],
-  providers: [MessageService, DepartamentoDataService, ConfirmationService],
-  templateUrl: './departamento.component.html',
+  providers: [MessageService, DistritoDataService, MunicipioDataService, ConfirmationService],
+  templateUrl: './distrito.component.html',
   styles: ``
 })
-export class DepartamentoComponent {
-  departamentos!: Departamento[];
-  departamento: Departamento;
+export class DistritoComponent {
+  distritos!: Distrito[];
+  distrito: Distrito;
   visible: boolean = false;
 
 
-  constructor(private dataServices: DepartamentoDataService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+  constructor(private dataServices: DistritoDataService, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.dataServices.getAll("").subscribe(
-      departamentos => (this.departamentos = departamentos),
+      distritos => (this.distritos = distritos),
       error => this.messageService.add(error)
     );
-    this.departamento = new Departamento();
+    this.distrito = new Distrito();
   }
 
-  actualizarLista(departamento: Departamento) {
+  actualizarLista(distrito: Distrito) {
 
-    const index = this.departamentos.findIndex(d => d.id === departamento.id);
+    const index = this.distritos.findIndex(d => d.id === distrito.id);
     if (index !== -1) {
-      this.departamentos[index] = departamento;
+      this.distritos[index] = distrito;
     } else {
-      this.departamentos.push(departamento);
+      this.distritos.push(distrito);
     }
     this.messageService.add({
       severity: 'success', summary: "Operación exitosa", detail: 'Se han guardado los' +
         ' cambios.'
     })
-    this.departamento = new Departamento();
+    this.distrito = new Distrito();
   }
 
   editar(dep: any) {
-    this.departamento = dep;
+    this.distrito = dep;
     this.visible = true;
   }
 
@@ -92,7 +93,7 @@ export class DepartamentoComponent {
               severity: 'success', summary: 'Operación exitosa', detail: 'Se ha eliminado el' +
                 ' registro.'
             });
-            this.departamentos = this.departamentos.filter(d => d.id !== id);
+            this.distritos = this.distritos.filter(d => d.id !== id);
           },
           error => {
             if (error.error && error.error.message) {

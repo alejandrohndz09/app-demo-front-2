@@ -1,0 +1,66 @@
+<p-dialog header="{{distrito.id?'Modificar':'Nuevo'}} registro" [modal]="true" [(visible)]="visible"
+          [style]="{ width:'25rem' }"
+          (onHide)="cerrar()">
+  <form>
+    <span class="p-text-secondary block mb-4">Por favor, complete los campos:</span>
+    <div class="mt-2 mb-4">
+      <p-floatlabel variant="on">
+        <p-input-mask mask="a**" id="codigo" name="codigo" [(ngModel)]="distrito.codigo"
+                      styleClass="w-full{{hasError('codigo')?' ng-invalid ng-dirty':''}}"
+                      (onComplete)="convertToUpperCase()"
+                      autocomplete="off"/>
+        <label for="codigo">Código</label>
+      </p-floatlabel>
+      <!-- Mensaje de error -->
+      <span *ngIf="hasError('codigo')" class="text-red-500 text-sm">
+            {{ getError('codigo') }}
+      </span>
+      <small id="codigo-help" *ngIf="!hasError('codigo')">El código debe tener 3 carateres.</small>
+    </div>
+
+    <div class="mb-4">
+      <p-floatlabel variant="on">
+        <input pInputText id="nombre" name="nombre" [(ngModel)]="distrito.nombre"
+               class="w-full"
+               autocomplete="off"
+               [ngClass]="{'ng-invalid ng-dirty': hasError('nombre')}"/>
+        <label for="nombre">Nombre</label>
+      </p-floatlabel>
+
+      <span *ngIf="hasError('nombre')" class="text-red-500 text-sm">
+            {{ getError('nombre') }}
+      </span>
+      <small id="nombre-help" *ngIf="!hasError('nombre')">Minimo 5 caracteres, máximo 80.</small>
+    </div>
+
+    <div class="mb-6">
+      <p-floatlabel variant="on">
+        <p-select [(ngModel)]="distrito.idMunicipio" name="idMunicipio" id="idMunicipio" [options]="municipios"
+                  class="w-full{{hasError('idMunicipio')?' ng-invalid ng-dirty':''}}"
+                  [group]="true"
+                  [filter]="true"
+                  filterBy="label"
+                  appendTo="body"
+        >
+          <ng-template let-group #group>
+            <div class="flex align-items-center">
+              <span class="pi pi-map-marker mr-1"></span>
+              <span>{{ group.label }}</span>
+            </div>
+          </ng-template>
+        </p-select>
+        <label for="idMunicipio">Municipio</label>
+      </p-floatlabel>
+      <span *ngIf="hasError('idMunicipio')" class="text-red-500 text-sm">
+            {{ getError('idMunicipio') }}
+      </span>
+      <small id="idMunicipio-help" *ngIf="!hasError('idMunicipio')">Seleccione el municipio al que pertenecerá
+        el distrito.</small>
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancel" severity="secondary" (click)="cerrar()"></p-button>
+      <p-button type="submit" label="{{distrito.id?'Modificar ':'Guardar'}}" (click)="guardar(distrito)"/>
+    </div>
+  </form>
+</p-dialog>
