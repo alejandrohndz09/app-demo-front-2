@@ -15,7 +15,7 @@
       [rows]="10"
       [tableStyle]="{ 'min-width': '50rem' }"
       [rowsPerPageOptions]="[5, 10, 20]"
-      [totalRecords]="departamentos.length"
+      [totalRecords]="departamentos?departamentos.length:0"
     >
       <ng-template #header>
         <tr>
@@ -29,7 +29,7 @@
         <tr>
           <td>{{ dep.codigo }}</td>
           <td>{{ dep.nombre }}</td>
-          <td>{{ dep.municipios ? dep.municipios.size() : 0 }}</td>
+          <td>{{ dep.municipios ? dep.municipios.length : 0 }}</td>
           <td>
             <div class="flex gap-1">
               <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="editar(dep)" pTooltip="Editar"
