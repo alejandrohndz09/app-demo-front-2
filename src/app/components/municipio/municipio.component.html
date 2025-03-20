@@ -1,6 +1,6 @@
 <p-card>
   <div class="flex justify-content-between align-items-center">
-    <h1>Módulo de Distritos</h1>
+    <h1>Módulo de Municipios</h1>
     <div class="flex gap-2">
       <toggle-menu></toggle-menu>
       <p-button label="Agregar" icon="pi pi-plus" severity="contrast" (click)="visible = true"/>
@@ -10,18 +10,18 @@
 
   <div class="card">
     <p-table
-      [value]="distritos"
+      [value]="municipios"
       [paginator]="true"
       [rows]="5"
       [tableStyle]="{ 'min-width': '50rem' }"
       [rowsPerPageOptions]="[5, 10, 20]"
-      [totalRecords]="distritos?distritos.length:0"
+      [totalRecords]="municipios?municipios.length:0"
     >
       <ng-template #header>
         <tr>
           <th style="width:25%">Código</th>
           <th style="width:25%">Nombre</th>
-          <th style="width:25%">Municipio</th>
+          <th style="width:25%">Departamento</th>
           <th style="width:25%">Acciones</th>
         </tr>
       </ng-template>
@@ -29,7 +29,7 @@
         <tr>
           <td>{{ dep.codigo }}</td>
           <td>{{ dep.nombre }}</td>
-          <td>{{ dep.municipio.nombre}}</td>
+          <td>{{ dep.departamento.nombre}}</td>
           <td>
             <div class="flex gap-1">
               <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="editar(dep)" pTooltip="Editar"
@@ -45,9 +45,9 @@
   </div>
 </p-card>
 
-<distrito-formulario [distrito]="distrito" [visible]="visible"
-                         (onHide)="visible=$event; distrito={}"
-                         (onSave)="actualizarLista($event)"></distrito-formulario>
+<municipio-formulario [municipio]="municipio" [visible]="visible"
+                         (onHide)="visible=$event; municipio={}"
+                         (onSave)="actualizarLista($event)"></municipio-formulario>
 
 <p-confirmDialog/>
 <p-toast/>
