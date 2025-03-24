@@ -36,13 +36,13 @@ export class MiMenuComponent {
         label: 'Word',
         icon: 'pi pi-file-word',
         iconStyle: { color: 'var(--p-blue-400)' },
-        command: () => this.descargarReporte('word') // Llama al método con el formato 'word'
+        command: () => this.descargarReporte('docx') // Llama al método con el formato 'word'
       },
       {
         label: 'Excel',
         icon: 'pi pi-file-excel',
         iconStyle: { color: 'var(--p-green-400)' },
-        command: () => this.descargarReporte('excel') // Llama al método con el formato 'excel'
+        command: () => this.descargarReporte('xlsx') // Llama al método con el formato 'excel'
       }
     ];
   }
@@ -69,8 +69,8 @@ export class MiMenuComponent {
   private getMimeType(format: string): string {
     switch (format) {
       case 'pdf': return 'application/pdf';
-      case 'word': return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-      case 'excel': return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      case 'docx': return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      case 'xlsx': return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
       default: return 'application/octet-stream';
     }
   }
